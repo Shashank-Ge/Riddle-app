@@ -1,4 +1,17 @@
-# Getting Started with Create React App
+# Riddle App
+
+A React application that displays random riddles and allows users to save their favorites.
+
+## Features
+
+- Random riddle display with automatic refresh every 15 seconds
+- Toggle answer visibility
+- Add/remove riddles to favorites
+- Persistent favorites storage using localStorage
+- Error handling and loading states
+- Responsive design
+
+## Project Structure
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
