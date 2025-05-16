@@ -1,6 +1,10 @@
+// RiddleCard component - Displays a single riddle with toggle-able answer
+// Used in both random riddle view and favorites list
+
 import React, { useState } from 'react';
 
 const RiddleCard = ({ riddle, answer, isFavorite, onToggleFavorite }) => {
+  // Track whether the answer is currently visible
   const [showAnswer, setShowAnswer] = useState(false);
 
   return (

@@ -1,3 +1,6 @@
+// Navigation component - Handles switching between random riddles and favorites
+// Uses active state to highlight current tab
+
 import React from 'react';
 
 const Navigation = ({ activeTab, setActiveTab }) => {

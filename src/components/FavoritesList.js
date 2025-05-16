@@ -1,3 +1,6 @@
+// FavoritesList component - Renders saved riddles using RiddleCard
+// Shows a message when no favorites are saved
+
 import React from 'react';
 import RiddleCard from './RiddleCard';
 

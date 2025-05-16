@@ -1,3 +1,6 @@
+// Main App component handling riddle fetching, favorites management, and UI state
+// Made by Shashank Goel 
+
 import React, { useState, useEffect } from 'react';
 import Navigation from './components/Navigation';
 import RiddleCard from './components/RiddleCard';
@@ -5,21 +8,31 @@ import FavoritesList from './components/FavoritesList';
 import './App.css';
 
 function App() {
+  // Manage active tab state - either 'random' or 'favorites'
   const [activeTab, setActiveTab] = useState('random');
+  
+  // Track current riddle being displayed
   const [currentRiddle, setCurrentRiddle] = useState(null);
+  
+  // Load favorites from localStorage on initial render
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem('favorites');
     return saved ? JSON.parse(saved) : [];
   });
+  
+  // UI state management
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [notification, setNotification] = useState(null);
 
+  // Fetch a new riddle from the API
+  // Handles various error cases and updates UI accordingly
   const fetchRiddle = async () => {
     try {
       setIsLoading(true);
       setError(null);
       const response = await fetch('https://riddles-api-eight.vercel.app/funny');
+      //The API given in the question paper, was not fetching any riddles so I used another one
       
       if (!response.ok) {
         if (response.status === 404) {
@@ -59,20 +72,26 @@ function App() {
     }
   };
 
+  // Helper to start the interval for auto-fetching riddles
+  // Returns interval ID for cleanup
   const startInterval = () => {
-    return setInterval(fetchRiddle, 15000);
+    return setInterval(fetchRiddle, 15000); // Fetch new riddle every 15 seconds
   };
 
+  // Setup initial fetch and auto-refresh interval
   useEffect(() => {
     fetchRiddle();
     const interval = startInterval();
-    return () => clearInterval(interval);
+    return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
+  // Sync favorites with localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [favorites]);
 
+  // Handle adding/removing riddles from favorites
+  // Includes validation, duplication checks, and user feedback
   const toggleFavorite = (riddle) => {
     if (!riddle || !riddle.question || !riddle.answer) {
       setNotification({
